@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import fs from 'fs';
 
 function delay(time) {
     return new Promise(function(resolve) {
@@ -6,8 +7,10 @@ function delay(time) {
     });
 }
 
-const browser = await puppeteer.launch({headless: true});
+const browser = await puppeteer.launch({headless: false});
 const page = await browser.newPage();
+
+let feed = [];
 
 await page.goto('https://www.normattiva.it/ricerca/avanzata');
 await page.setViewport({width: 1080, height: 1024});
@@ -52,9 +55,12 @@ for (let i = 0; i < pageNumbers.length; i++) {
     });
 
     console.log('result', result);
+    feed.push(...result);
 
 
-    await delay(1000)
+    await delay(10)
 }
 
 await browser.close();
+feed = feed.sort((a,b) => new Date(a.date) - new Date(b.date));
+await fs.writeFileSync('./feed.json', JSON.stringify(feed, null, 2));
