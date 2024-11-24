@@ -5,12 +5,16 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npx wrangler deploy"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@cloudflare/puppeteer": "^0.0.14",
+    "dotenv": "^16.4.5",
+    "dropbox": "^10.34.0",
     "puppeteer": "^23.5.3"
   }
 }
