@@ -1,8 +1,7 @@
 import {Dropbox} from 'dropbox';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 
-dotenv.config();
-const dbx = new Dropbox({ accessToken: process.env.DBX_ACCESS_TOKEN });
+const dbx = new Dropbox({ accessToken: process.env.DROPBOX_OAUTH2_TOKEN });
 
 export async function uploadContentToDropbox(fileContent, dropboxPath) {
     try {

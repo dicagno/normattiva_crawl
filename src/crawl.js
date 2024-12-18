@@ -1,17 +1,10 @@
 import puppeteer from 'puppeteer';
 import crypto from 'crypto';
 import { uploadContentToDropbox } from './storage.js';
+import stopwords from 'stopwords-it' assert { type: 'json' };
+import { Vectoriser } from './nlp.js';
 
-const stopwords = [
-    "a", "ad", "al", "allo", "ai", "agli", "all", "alla", "d", "da", "dal", "dallo", 
-    "dei", "degli", "del", "della", "delle", "di", "e", "ed", "in", "il", "la", "le", 
-    "li", "lo", "l", "o", "gli", "un", "uno", "una", "ma", "per", "che", "su", "se", 
-    "ci", "sì", "non", "più", "né", "ne", "con", "tra", "fra", "mi", "ti", "si", 
-    "vi", "ci", "quello", "quella", "questo", "questa", "i", "tu", "io", "noi", 
-    "voi", "loro", "gli", "suo", "sua", "tuo", "tuoi", "mio", "mie", "questi", 
-    "quelle", "queste", "quei", "degli", "dei", "dell", "delle", "uno", "una", 
-    "essere", "avere", "fare", "volere", "potere", "dovere", "andare", "venire",
-  ];
+import 'dotenv/config';
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -164,11 +157,22 @@ async function extractArticle(page, {
     feed = feed.sort((a, b) => new Date(a.ISODate) - new Date(b.ISODate));
     await uploadContentToDropbox(JSON.stringify(feed, null, 2), `/normattiva-crawl/feed-${new Date().toISOString().split('T')[0]}.json`);
 
+    const vectoriser = new Vectoriser({
+        openaiApiKey: process.env.OPENAI_API_KEY,
+        pineconeApiKey: process.env.PINECONE_API_KEY,
+        pineconeEnvironment: process.env.PINECONE_ENVIRONMENT,
+        pineconeIndex: process.env.PINECONE_INDEX,
+    });
+
+    await vectoriser.initPinecone();
+
     for (const article of feed) {
         const articleData = await extractArticle(page, article);
         const { metadata: { uriHash } } = articleData;
 
-        await uploadContentToDropbox(JSON.stringify(articleData, null, 2), `/normattiva-crawl/article-${uriHash}.json`);
+        await vectoriser.processInput(articleData);
+
+        //await uploadContentToDropbox(JSON.stringify(articleData, null, 2), `/normattiva-crawl/article-${uriHash}.json`);
     }
 
     await browser.close();

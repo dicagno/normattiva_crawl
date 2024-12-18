@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
+    "crawl": "node src/crawl.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "npx wrangler deploy"
   },
@@ -13,8 +13,19 @@
   "description": "",
   "dependencies": {
     "@cloudflare/puppeteer": "^0.0.14",
-    "dotenv": "^16.4.5",
+    "@pinecone-database/pinecone": "^4.0.0",
+    "axios": "^1.7.9",
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
     "dropbox": "^10.34.0",
-    "puppeteer": "^23.5.3"
+    "express": "^4.21.2",
+    "openai": "^4.77.0",
+    "puppeteer": "^23.5.3",
+    "stopwords-it": "^0.4.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "globals": "^15.13.0"
   }
 }
