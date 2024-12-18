@@ -111,3 +111,9 @@ wranglerjs/
 *.temp
 
 # End Generation Here
+
+# Python virtualenv
+venv/
+ENV/
+env/
+.venv/

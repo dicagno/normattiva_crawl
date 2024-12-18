@@ -21,6 +21,7 @@
     "express": "^4.21.2",
     "openai": "^4.77.0",
     "puppeteer": "^23.5.3",
+    "python-shell": "^5.0.0",
     "stopwords-it": "^0.4.0"
   },
   "devDependencies": {

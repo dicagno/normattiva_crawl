@@ -36,7 +36,7 @@ export class Vectoriser {
             try {
                 embeddings.push({
                     sentence,
-                    embedding: await this.generateEmbedding(this.openai, sentence),
+                    embedding: await generateEmbedding(this.openai, sentence),
                 });
             } catch (error) {
                 console.error(`Error generating embedding for sentence: ${sentence}`, error.message);
