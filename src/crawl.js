@@ -173,9 +173,9 @@ async function extractArticle(page, {
         const articleData = await extractArticle(page, article);
         const { metadata: { uriHash } } = articleData;
 
-        await vectoriser.processInput(articleData);
+        // await vectoriser.processInput(articleData);
 
-        //await uploadContentToDropbox(JSON.stringify(articleData, null, 2), `/normattiva-crawl/article-${uriHash}.json`);
+        await uploadContentToDropbox(JSON.stringify(articleData, null, 2), `/normattiva-crawl/article-${uriHash}.json`);
     }
 
     await browser.close();
