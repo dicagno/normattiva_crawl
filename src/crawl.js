@@ -91,12 +91,15 @@ async function extractArticle(page, {
 (async () => {
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
+    const yearToBeCrawled = process.argv[2];
+
+    console.log(`crawling year ${yearToBeCrawled}...`)
 
     let feed = [];
 
     await page.goto('https://www.normattiva.it/ricerca/avanzata');
     await page.setViewport({ width: 1080, height: 1024 });
-    await page.locator('input#annoProvvedimento').fill('2020');
+    await page.locator('input#annoProvvedimento').fill(yearToBeCrawled);
     await page.locator('button[type="submit"]').click();
 
     // Wait for the pagination element to be available

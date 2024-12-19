@@ -30,6 +30,10 @@ export class Vectoriser {
         this.pineconeIndexInstance = this.pineconeClient.index(this.pineconeIndex);
     }
 
+    async flushPinecone() {
+        this.pineconeIndexInstance.namespace('ns1').deleteAll();
+    }
+
     async generateEmbeddings(sentences) {
         const embeddings = [];
         for (const sentence of sentences) {
@@ -75,4 +79,3 @@ export class Vectoriser {
         }
     }
 }
-

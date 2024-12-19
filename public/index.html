@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +22,6 @@
             width: 100%;
             max-width: 600px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             background: white;
             border-radius: 8px;
         }
@@ -39,6 +39,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
+            border-radius: 20px;
         }
 
         .results {
@@ -70,11 +71,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="Enter your query...">
-            <button onclick="performSearch()">Search</button>
         </div>
         <ul class="results" id="results"></ul>
     </div>
@@ -103,6 +104,17 @@
                 resultsContainer.innerHTML = '<p>No results found.</p>';
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add the keydown event listener
+            const input = document.querySelector(".search-bar input");
+            input.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") { // Check if the pressed key is 'Enter'
+                    performSearch();
+                }
+            });
+        });
     </script>
 </body>
+
 </html>
